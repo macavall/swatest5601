@@ -26,14 +26,20 @@ public class http1
 
             Task.Factory.StartNew(async () =>
             {
-                _logger.LogInformation($"Counter: {counter}");
+                while(true)
+                {
+                    _logger.LogInformation($"Counter: {counter}");
 
-                var httpReq = new HttpRequestMessage(HttpMethod.Get, "https://ambitious-field-0ee1c3f0f.6.azurestaticapps.net");
+                    var httpReq = new HttpRequestMessage(HttpMethod.Get, "https://ambitious-field-0ee1c3f0f.6.azurestaticapps.net");
+                    
+                    using(httpClient = new HttpClient())
+                    {
+                        var response = await httpClient.SendAsync(httpReq);
+                        _logger.LogInformation($"Response Code: {response.StatusCode}");
+                    }
 
-                var httpClient = new HttpClient();
-                var response = await httpClient.SendAsync(httpReq);
-
-                _logger.LogInformation($"Response Code: {response.StatusCode}");
+                    Thread.Sleep(6000);
+                }
             });
         }        
 
