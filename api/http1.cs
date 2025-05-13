@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
+using System.Net.Http;
+using System.Threading;
 
 namespace swatest5601fa;
 
@@ -29,8 +31,6 @@ public class http1
                 while(true)
                 {
                     _logger.LogInformation($"Counter: {counter}");
-
-                    var httpReq = new HttpRequestMessage(HttpMethod.Get, "https://ambitious-field-0ee1c3f0f.6.azurestaticapps.net");
                     
                     using(httpClient = new HttpClient())
                     {
