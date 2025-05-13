@@ -20,19 +20,22 @@ public class http1
     {
         _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-
-
-        Task.Factory.StartNew(async () =>
+        if (counter != 1)
         {
-            _logger.LogInformation($"Counter: {counter}");
+            counter = 1;
 
-            var httpReq = new HttpRequestMessage(HttpMethod.Get, "https://ambitious-field-0ee1c3f0f.6.azurestaticapps.net/api/message");
+            Task.Factory.StartNew(async () =>
+            {
+                _logger.LogInformation($"Counter: {counter}");
 
-            var httpClient = new HttpClient();
-            var response = await httpClient.SendAsync(httpReq);
+                var httpReq = new HttpRequestMessage(HttpMethod.Get, "https://ambitious-field-0ee1c3f0f.6.azurestaticapps.net/api/message");
 
-            _logger.LogInformation($"Response Code: {response.StatusCode}");
-        });
+                var httpClient = new HttpClient();
+                var response = await httpClient.SendAsync(httpReq);
+
+                _logger.LogInformation($"Response Code: {response.StatusCode}");
+            });
+        }        
 
         return new OkObjectResult("Welcome to Azure Functions!");
     }
