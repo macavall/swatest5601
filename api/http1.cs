@@ -8,6 +8,7 @@ namespace swatest5601fa;
 public class http1
 {
     private readonly ILogger<http1> _logger;
+    private int counter = 0;
 
     public http1(ILogger<http1> logger)
     {
@@ -15,9 +16,24 @@ public class http1
     }
 
     [Function("message")]
-    public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
+    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
     {
         _logger.LogInformation("C# HTTP trigger function processed a request.");
+
+
+
+        Task.Factory.StartNew(async () =>
+        {
+            _logger.LogInformation($"Counter: {counter}");
+
+            var httpReq = new HttpRequestMessage(HttpMethod.Get, "https://ambitious-field-0ee1c3f0f.6.azurestaticapps.net/api/message");
+
+            var httpClient = new HttpClient();
+            var response = await httpClient.SendAsync(httpReq);
+
+            _logger.LogInformation($"Response Code: {response.StatusCode}");
+        });
+
         return new OkObjectResult("Welcome to Azure Functions!");
     }
 }
