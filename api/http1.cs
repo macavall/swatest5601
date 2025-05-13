@@ -28,7 +28,7 @@ public class http1
             {
                 _logger.LogInformation($"Counter: {counter}");
 
-                var httpReq = new HttpRequestMessage(HttpMethod.Get, "https://ambitious-field-0ee1c3f0f.6.azurestaticapps.net/api/message");
+                var httpReq = new HttpRequestMessage(HttpMethod.Get, "https://ambitious-field-0ee1c3f0f.6.azurestaticapps.net");
 
                 var httpClient = new HttpClient();
                 var response = await httpClient.SendAsync(httpReq);
