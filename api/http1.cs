@@ -24,7 +24,7 @@ public class http1
         {
             counter = 1;
 
-            Task.Factory.StartNew(async () =>
+            _ = Task.Factory.StartNew(async () =>
             {
                 while(true)
                 {
@@ -34,6 +34,8 @@ public class http1
                     
                     using(httpClient = new HttpClient())
                     {
+                        var httpReq = new HttpRequestMessage(HttpMethod.Get, "https://ambitious-field-0ee1c3f0f.6.azurestaticapps.net");
+
                         var response = await httpClient.SendAsync(httpReq);
                         _logger.LogInformation($"Response Code: {response.StatusCode}");
                     }
