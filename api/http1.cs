@@ -32,7 +32,7 @@ public class http1
                 {
                     _logger.LogInformation($"Counter: {counter}");
                     
-                    using(httpClient = new HttpClient())
+                    using(var httpClient = new HttpClient())
                     {
                         var httpReq = new HttpRequestMessage(HttpMethod.Get, "https://ambitious-field-0ee1c3f0f.6.azurestaticapps.net");
 
